@@ -14,36 +14,41 @@ import {
 import { capitalizeFirstLetter, truncateString } from '../utils/commonUtils';
 import { useState } from 'react';
 import SkateboardingIcon from '@mui/icons-material/Skateboarding';
+import { Student } from '@/hooks/useStudentsBy';
 
-export default function PrayerCard({ studentData }) {
+export default function PrayerCard({
+    studentData,
+}: {
+    studentData: Student;
+}) {
     const [index, setIndex] = useState<number | null>(null);
-    const samplePR: unknown[] = [
-        {
-            createdAt: Date.now(),
-            content:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        },
-        {
-            createdAt: Date.now(),
-            content:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        },
-        {
-            createdAt: Date.now(),
-            content:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        },
-        {
-            createdAt: Date.now(),
-            content:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        },
-        {
-            createdAt: Date.now(),
-            content:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        },
-    ];
+    // const samplePR: unknown[] = [
+    //     {
+    //         createdAt: Date.now(),
+    //         content:
+    //             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    //     },
+    //     {
+    //         createdAt: Date.now(),
+    //         content:
+    //             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    //     },
+    //     {
+    //         createdAt: Date.now(),
+    //         content:
+    //             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    //     },
+    //     {
+    //         createdAt: Date.now(),
+    //         content:
+    //             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    //     },
+    //     {
+    //         createdAt: Date.now(),
+    //         content:
+    //             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    //     },
+    // ];
     return (
         <Card key={studentData.id} variant='outlined' sx={{ width: 384 }}>
             <CardOverflow variant='soft'>
@@ -75,7 +80,7 @@ export default function PrayerCard({ studentData }) {
                         studentData.prayerRequests
                             .sort((a, b) => a.createdAt - b.createdAt)
                             .slice(0, 3)
-                            .map((pr: unknown, keyIndex: number) => {
+                            .map((pr, keyIndex: number) => {
                                 if (!pr.content) return null;
                                 return (
                                     <AccordionGroup key={pr.createdAt + pr.content + keyIndex}>

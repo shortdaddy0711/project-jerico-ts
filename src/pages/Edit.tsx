@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext, ChangeEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import { db, storage } from '../firebaseConfig';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Box, Button, Input, Textarea, Typography, CircularProgress, Alert, AspectRatio } from '@mui/joy';
-import { AuthContext } from '../context/AuthContext';
+// import { AuthContext } from '../context/AuthContext';
 import { capitalizeFirstLetter } from '@/components/utils/commonUtils';
 
 interface Student {
@@ -16,20 +16,28 @@ interface Student {
     photo?: string;
 }
 
+type FormValues = {
+    name: string;
+    ministry: string;
+    lifegroup: string;
+    note: string;
+    photo: string;
+    notes: string[];
+};
+
 const Edit: React.FC = () => {
     const { studentId } = useParams<{ studentId: string }>();
-    const { user } = useContext(AuthContext);
-
-    console.log(user);
+    // const { user } = useContext(AuthContext);
 
     const [student, setStudent] = useState<Student | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-    const [formValues, setFormValues] = useState({
+    const [formValues, setFormValues] = useState<FormValues>({
         name: '',
         ministry: '',
         lifegroup: '',
         note: '',
         photo: '',
+        notes: [],
     });
     const [photoFile, setPhotoFile] = useState<File | null>(null);
     const [photoPreview, setPhotoPreview] = useState<string | undefined>(undefined);
@@ -66,6 +74,7 @@ const Edit: React.FC = () => {
                         lifegroup: data['lifegroup(23-24)'] || '',
                         note: data.note || '',
                         photo: data.photo || '',
+                        notes: data.notes || [],
                     });
                 } else {
                     setError('Student not found.');
@@ -135,7 +144,7 @@ const Edit: React.FC = () => {
 
         try {
             const studentDocRef = doc(db, 'students', studentId!);
-            const updatedData: any = {
+            const updatedData = {
                 ministry: formValues.ministry,
                 'lifegroup(23-24)': formValues.lifegroup,
                 photo: '',
@@ -283,7 +292,7 @@ const Edit: React.FC = () => {
                 <Textarea
                     placeholder='Enter additional notes'
                     name='notes'
-                    value={(formValues as any).notes || ''}
+                    value={formValues.notes || ''}
                     onChange={handleInputChange}
                     variant='outlined'
                     minRows={4}

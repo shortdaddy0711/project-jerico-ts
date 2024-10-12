@@ -2,14 +2,14 @@ import { useEffect, useState, MouseEvent } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import HomeCard from '@/components/ui/HomeCard';
 import { Box, Typography, CircularProgress, Alert, Stack, Card, AspectRatio, CardContent, Button } from '@mui/joy';
-import useStudentsBy from '@/hooks/useStudentsBy';
+import useStudentsBy, { Student } from '@/hooks/useStudentsBy';
 import { capitalizeFirstLetter, getRandomItems } from '@/components/utils/commonUtils';
 import { IOSSwitch } from '@/components/ui/IOSSwitch';
 import SkateboardingIcon from '@mui/icons-material/Skateboarding';
 import { useNavigate } from 'react-router-dom';
 
 function Home() {
-    const [randomStudents, setRandomStudents] = useState<unknown[]>([]);
+    const [randomStudents, setRandomStudents] = useState<Student[]>([]);
     const [list, setList] = useState<boolean>(false);
     const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ function Home() {
         navigate(`/edit/${id}`);
     };
 
-    const requiredField = ['name', 'nickName', 'grade', 'school', 'ministry', 'lifegroup(23-24)'];
+    const requiredField: (keyof Student)[] = ['name', 'nickName', 'grade', 'school', 'ministry', 'lifegroup(23-24)'];
 
     const inputTitleMapping: Record<string, string> = {
         name: 'Name',
@@ -104,43 +104,6 @@ function Home() {
                 >
                     {list ? (
                         randomStudents.map((student) => (
-                            // <Card
-                            //     variant='soft'
-                            //     orientation='horizontal'
-                            //     sx={{ height: '100%', marginBottom: '30px' }}
-                            //     key={student.id}
-                            // >
-                            //     <AspectRatio
-                            //         flex
-                            //         ratio='1'
-                            //         maxHeight={150}
-                            //         sx={{ minWidth: 150, borderRadius: '100%' }}
-                            //     >
-                            //         {student.photo ? (
-                            //             <img
-                            //                 src={student.photo}
-                            //                 loading='lazy'
-                            //                 alt={student.name}
-                            //                 style={{ objectFit: 'cover' }}
-                            //             />
-                            //         ) : (
-                            //             <Box>
-                            //                 <SkateboardingIcon fontSize='large' />
-                            //             </Box>
-                            //         )}
-                            //     </AspectRatio>
-                            //     <CardContent>
-                            //         <Typography level='body-lg' color='primary'>
-                            //             {capitalizeFirstLetter(student.name)}
-                            //         </Typography>
-                            //         <Typography level='body-sm' color='neutral'>
-                            //             Ministry: {student.ministry}
-                            //         </Typography>
-                            //         <Typography level='body-sm' color='neutral'>
-                            //             Lifegroup: {student['lifegroup(23-24)']}
-                            //         </Typography>
-                            //     </CardContent>
-                            // </Card>
                             <Card
                                 key={student.id}
                                 orientation='horizontal'
@@ -172,7 +135,11 @@ function Home() {
                                         )}
                                     </AspectRatio>
                                     <div>
-                                        <Button color='neutral' onClick={(e) => handleEdit(e, student.id)} variant='solid'>
+                                        <Button
+                                            color='neutral'
+                                            onClick={(e) => handleEdit(e, student.id)}
+                                            variant='solid'
+                                        >
                                             Update Photo
                                         </Button>
                                     </div>
@@ -182,6 +149,7 @@ function Home() {
                                         (key) =>
                                             key !== 'parent' &&
                                             key !== 'id' &&
+                                            key !== 'prayerRequests' &&
                                             (key !== 'name' ? (
                                                 <Typography key={key}>
                                                     <strong>{inputTitleMapping[key]}: </strong>

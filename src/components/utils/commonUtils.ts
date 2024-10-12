@@ -1,3 +1,5 @@
+import { Student } from '@/hooks/useStudentsBy';
+
 export const capitalizeFirstLetter = (string: string): string => {
     return string
         .split(' ')
@@ -12,7 +14,7 @@ export const truncateString = (str: string, maxLength: number): string => {
     return str;
 };
 
-export const getRandomItems = (arr: unknown[], n: number) => {
+export const getRandomItems = (arr: Student[], n: number) => {
     if (n > arr.length) {
         throw new RangeError('getRandomItems: more elements taken than available');
     }

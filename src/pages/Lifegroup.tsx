@@ -1,17 +1,17 @@
 import useStudentsBy from '@/hooks/useStudentsBy';
-import { Typography, Box, CircularProgress, Alert, Stack } from '@mui/joy';
+import { Typography, Box, CircularProgress, Alert } from '@mui/joy';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import HomeCard from '@/components/ui/HomeCard';
-import { IOSSwitch } from '@/components/ui/IOSSwitch';
-import { useState } from 'react';
+// import { IOSSwitch } from '@/components/ui/IOSSwitch';
+// import { useState } from 'react';
 
 const Lifegroup = () => {
     const { students, loading, error } = useStudentsBy('lifegroup');
-    const [list, setList] = useState<boolean>(false);
+    // const [list, setList] = useState<boolean>(false);
 
-    const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setList(event.target.checked);
-    };
+    // const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     setList(event.target.checked);
+    // };
 
     return (
         <Box>
@@ -33,11 +33,11 @@ const Lifegroup = () => {
                 >
                     Today's Students
                 </Typography>
-                <Stack direction='row' spacing={1} sx={{ alignItems: 'center' }}>
+                {/* <Stack direction='row' spacing={1} sx={{ alignItems: 'center' }}>
                     <Typography>Swipe</Typography>
                     <IOSSwitch onChange={handleSwitchChange} />
                     <Typography>List</Typography>
-                </Stack>
+                </Stack> */}
             </Box>
 
             {/* Loading State */}

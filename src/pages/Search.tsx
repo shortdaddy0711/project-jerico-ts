@@ -107,10 +107,9 @@ import {
     Alert,
     Card,
     CardContent,
-    CardActions,
     FormControl,
-    FormLabel,
-    CardOverflow,
+    // FormLabel,
+    // CardOverflow,
     AspectRatio,
 } from '@mui/joy';
 import { capitalizeFirstLetter } from '@/components/utils/commonUtils';
@@ -172,7 +171,7 @@ const Search = () => {
     };
 
     // Handle navigation to the edit page
-    const handleEdit = (e: MouseEvent<HTMLButtonElement>, id: string) => {
+    const handleEdit = (e: MouseEvent<HTMLAnchorElement>, id: string) => {
         e.preventDefault();
         navigate(`/edit/${id}`);
     };
@@ -259,7 +258,7 @@ const Search = () => {
                                     <img src={student.photo} loading='lazy' alt='' />
                                 </AspectRatio>
                                 <div>
-                                    <Button onClick={(e) => handleEdit(e, student.id)} variant='solid'>
+                                    <Button type='button' onClick={(e) => handleEdit(e, student.id)} variant='solid'>
                                         Edit
                                     </Button>
                                 </div>

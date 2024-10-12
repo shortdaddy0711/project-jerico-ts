@@ -5,16 +5,27 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { capitalizeFirstLetter } from '@/components/utils/commonUtils';
 
-// interface Student {
-//     id: string;
-//     name: string;
-//     ministryTeam: string;
-//     // Add other relevant fields
-// }
+export type Student = {
+    id: string;
+    name: string;
+    ministry: string;
+    photo: string;
+    school: string;
+    grade: string;
+    nickName: string;
+    lifegroup: string;
+    notes: string[];
+    parent: unknown
+    'lifegroup(23-24)': string;
+    prayerRequests: {
+        content: string;
+        createdAt: number;
+    }[];
+};
 
 const useStudentsBy = (by?: string) => {
     const { user, userData } = useContext(AuthContext);
-    const [students, setStudents] = useState<unknown[]>([]);
+    const [students, setStudents] = useState<Student[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -48,8 +59,9 @@ const useStudentsBy = (by?: string) => {
             // } else {
             try {
                 let studentsBy: string = '';
-                if (by) {
-                    studentsBy = userData[by];
+                if (by && userData && typeof userData === 'object' && by in userData) {
+                    const userDataObj = userData as Record<string, unknown>;
+                    studentsBy = userDataObj[by] as string;
 
                     if (!studentsBy) {
                         setError(`${by} not assigned to you.`);
@@ -72,12 +84,12 @@ const useStudentsBy = (by?: string) => {
                         : studentsRef;
                 const querySnapshot = await getDocs(queryBy);
 
-                const studentsList: unknown[] = [];
+                const studentsList: Student[] = [];
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
                     studentsList.push({
                         id: doc.id,
-                        ...data,
+                        ...(data as Omit<Student, 'id'>),
                     });
                 });
 
