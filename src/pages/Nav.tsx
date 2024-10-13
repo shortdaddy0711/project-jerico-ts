@@ -62,7 +62,7 @@ const NavBar: React.FC = () => {
                             textDecoration: 'none',
                         }}
                     >
-                        <img src='/src/assets/mvcym_logo_w.png' alt='Logo' height='40' />
+                        <img src='https://firebasestorage.googleapis.com/v0/b/project-jericho-89973.appspot.com/o/assets%2Fmvcym_logo_w.png' alt='Logo' height='40' />
                     </Typography>
 
                     {/* Mobile Menu Icon */}
